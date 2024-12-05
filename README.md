@@ -366,8 +366,18 @@ git push --set-upstream origin main
 
 6. Test your pipelines.
    - make changes to only one app and push to remote
+     ![blog](https://github.com/user-attachments/assets/1a56640d-a24b-4261-a52d-3da2a8ba08fb)
+
    - make changes to multiple independent app and push to remote
+     ![admin-blog](https://github.com/user-attachments/assets/35c96f92-19f3-4320-ac28-8d6fea30366a)
+
    - make changes to only ui and push to remote
+     ![ui-storfrontf](https://github.com/user-attachments/assets/a0410007-601b-49ca-a37a-b06fca3a5481)
+
    - make changes to ui and any dependent app and push to remote
+     ![ui](https://github.com/user-attachments/assets/55722ab5-026a-4166-8cbe-30979e8e80c0)
+
    - make changes to ui and independent app(apps/api) and push to remote
+     ![ui-api](https://github.com/user-attachments/assets/774db7ed-a98d-49c1-be68-0f1a5bcfb09a)
+
 7. Verify the pipelines.
