@@ -349,7 +349,11 @@ note: This wont effect your git/github configuration in local.
 4.  Push your monorepo to GitLab after committing your changes.
 
 ```sh
+cd <your project folder>
+git init --initial-branch=main
 git remote add origin < GitLab project url >
+git add .
+git commit -m "Initial commit"
 git push --set-upstream origin main
 ```
 
