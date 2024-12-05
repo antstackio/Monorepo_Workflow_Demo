@@ -1,0 +1,43 @@
+stages:
+  - build
+  - test
+  - deploy
+  - triggers
+
+default:
+  image: node:20-alpine
+
+build_ui: # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "starting script"
+    - apk add --no-cache --virtual .build-deps alpine-sdk
+    - npm install -g pnpm
+    - pnpm install
+    - echo "starting blog build"
+    - pnpm run build
+    - echo "build complete"
+test_ui:
+  stage: test
+  needs: [build_ui]
+  script:
+    - echo "This job tests something."
+
+deploy_ui:
+  stage: deploy
+  needs: [test_ui]
+  script:
+    - echo "This job deploys something."
+  environment: production
+
+trigger_admin:
+  stage: triggers
+  needs: [deploy_ui]
+  trigger:
+    include: apps/admin/.gitlab-ci.yml
+
+trigger_blog:
+  stage: triggers
+  needs: [deploy_ui]
+  trigger:
+    include: apps/blog/.gitlab-ci.yml

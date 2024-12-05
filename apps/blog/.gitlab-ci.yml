@@ -1,0 +1,29 @@
+stages:
+  - build
+  - test
+  - deploy
+
+default:
+  image: node:20-alpine
+
+build_blog: # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "starting script"
+    - apk add --no-cache --virtual .build-deps alpine-sdk
+    - npm install -g pnpm
+    - pnpm install
+    - echo "starting blog build"
+    - pnpm run build --filter blog
+    - echo "build complete"
+test_blog:
+  stage: test
+  needs: [build_blog]
+  script:
+    - echo "This job tests something."
+
+deploy_blog:
+  stage: deploy
+  needs: [test_blog]
+  script:
+    - echo "This job deploys something."

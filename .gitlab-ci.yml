@@ -1,0 +1,56 @@
+stages:
+  - triggers
+
+trigger_ui:
+  stage: triggers
+  trigger:
+    include: packages/ui/.gitlab-ci.yml
+    strategy: depend
+  rules:
+    - changes:
+        - packages/ui/**/*
+
+trigger_admin:
+  stage: triggers
+  trigger:
+    include: apps/admin/.gitlab-ci.yml
+    strategy: depend
+  only:
+    changes:
+      - "apps/admin/**/*"
+  except:
+    changes:
+      - "packages/ui/**/*"
+
+trigger_blog:
+  stage: triggers
+  trigger:
+    include: apps/blog/.gitlab-ci.yml
+    strategy: depend
+  only:
+    changes:
+      - "apps/blog/**/*"
+  except:
+    changes:
+      - "packages/ui/**/*"
+
+trigger_storefront:
+  stage: triggers
+  trigger:
+    include: apps/storefront/.gitlab-ci.yml
+    strategy: depend
+  only:
+    changes:
+      - "apps/storefront/**/*"
+  except:
+    changes:
+      - "packages/ui/**/*"
+
+trigger_api:
+  stage: triggers
+  trigger:
+    include: apps/api/.gitlab-ci.yml
+    strategy: depend
+  rules:
+    - changes:
+        - apps/api/**/*

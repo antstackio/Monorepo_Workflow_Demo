@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+cache:
+  key: ${CI_PIPELINE_ID}
+  paths:
+    - node_modules
+    - .turbo
+    - turbo.json
+
+default:
+  image: node:20-alpine
+
+build_api: # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo `pipelineID-${CI_PIPELINE_ID}`
+    - echo "starting script"
+    - apk add --no-cache --virtual .build-deps alpine-sdk
+    - npm install -g pnpm
+    - pnpm install
+    - echo "starting blog build"
+    - pnpm run build
+    - echo "build complete"
+test_api:
+  stage: test
+  needs: [build_api]
+  script:
+    - echo "This job tests something."
+
+deploy_api:
+  stage: deploy
+  needs: [test_api]
+  script:
+    - echo "This job deploys something. for sure"
